@@ -16,12 +16,18 @@ public class Code002 {
      * @param args
      */
 	public static void main(String[] args) {
-        ListNode l1 = new ListNode(2);
-        l1.next = new ListNode(9);
-        ListNode l2 = new ListNode(3);
-        l2.next = new ListNode(2);
+        ListNode l11 = new ListNode(2);
+        ListNode l12 = new ListNode(4);
+        ListNode l13 = new ListNode(3);
+        l11.next = l12;
+        l12.next = l13;
+        ListNode l21 = new ListNode(5);
+        ListNode l22 = new ListNode(6);
+        ListNode l23 = new ListNode(7);
+        l21.next = l22;
+        l22.next = l23;
 
-        ListNode sum = addTwoNumbers(l1, l2);
+        ListNode sum = addTwoNumbers2(l11, l21);
         if (sum != null) {
             while(sum != null){
                 System.out.println(sum.val);
@@ -30,6 +36,36 @@ public class Code002 {
         } else {
             System.out.println("0000000");
         }
+    }
+
+    public static ListNode addTwoNumbers2(ListNode l1, ListNode l2) {
+        if (l1 == null || l2 == null) {
+            return null;
+        }
+        ListNode n1 = l1, n2 = l2, total = new ListNode(0);
+        ListNode temp = total;// 代表下一位
+        int single = 0;
+        while (n1 != null || n2 != null) {
+            int a = 0;
+            int b = 0;
+            if (n1 != null){
+                a = n1.val;
+                n1 = n1.next;
+            }
+            if (n2 != null){
+                b= n2.val;
+                n2 = n2.next;
+            }
+            int sum = a + b + single;
+
+            single = sum / 10;
+            temp.next = new ListNode(sum % 10);
+            temp = temp.next;
+        }
+        if (single > 0){
+            temp.next = new ListNode(single);
+        }
+        return total.next;
     }
 
     /**
