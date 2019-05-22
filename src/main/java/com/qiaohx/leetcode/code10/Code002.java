@@ -27,7 +27,7 @@ public class Code002 {
         l21.next = l22;
         l22.next = l23;
 
-        ListNode sum = addTwoNumbers2(l11, l21);
+        ListNode sum = addTwoNumbers3(l11, l21);
         if (sum != null) {
             while(sum != null){
                 System.out.println(sum.val);
@@ -61,6 +61,35 @@ public class Code002 {
             single = sum / 10;
             temp.next = new ListNode(sum % 10);
             temp = temp.next;
+        }
+        if (single > 0){
+            temp.next = new ListNode(single);
+        }
+        return total.next;
+    }
+
+    public static ListNode addTwoNumbers3(ListNode l1, ListNode l2) {
+        if (l1 == null || l2 == null) {
+            return null;
+        }
+        ListNode n1 = l1, n2 = l2, total = new ListNode(0);
+        ListNode temp;// 代表下一位
+        int single = 0;
+        for (temp = total;n1 != null || n2 != null;temp = temp.next) {
+            int a = 0;
+            int b = 0;
+            if (n1 != null){
+                a = n1.val;
+                n1 = n1.next;
+            }
+            if (n2 != null){
+                b= n2.val;
+                n2 = n2.next;
+            }
+            int sum = a + b + single;
+
+            single = sum / 10;
+            temp.next = new ListNode(sum % 10);
         }
         if (single > 0){
             temp.next = new ListNode(single);
