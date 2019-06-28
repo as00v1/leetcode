@@ -28,24 +28,40 @@ public class Code003 {
         int maxLength = 0;
         Map<Character, Integer> map = new HashMap<>();
         while (endIndex < s.length()){
-            char a = s.charAt(endIndex++);
-            boolean flag = map.containsKey(a);
-            if (!flag){
-                map.put(a, 0);
-                if(map.size() >= maxLength){// 判断是不是最长的
-                    maxLength = map.size();
-                }
+            char a = s.charAt(endIndex);
+            if (!map.containsKey(a)){
+                map.put(a, endIndex);
             }else{
                 // 已存在
                 if(map.size() >= maxLength){// 判断是不是最长的
                     maxLength = map.size();
                 }
-                // 起始游标+1
-                char beginChar = s.charAt(beginIndex++);
-                map.remove(beginChar);
+                beginIndex = map.get(a);// 获取重复值的下标
+                map.clear();
+                map.put(s.charAt(beginIndex), endIndex);
             }
+//            beginIndex++;
+            endIndex++;
         }
 //        map.keySet().forEach(System.out::println);
+        return maxLength;
+    }
+
+
+    private static int lengthOfLongestSubstring2(String s) {
+        int maxLength = 0;
+        int beginIndex = 0;
+        char[] chars = s.toCharArray();
+        Map<Character, Integer> map = new HashMap<>();
+        for (int i = 0; i < s.length(); i++) {
+            char a = chars[i];
+            if (!map.containsKey(a)){
+                map.put(a, i);
+            }else{// 不存在,起始游标滑动到重复位地址
+
+            }
+        }
+
         return maxLength;
     }
 }
