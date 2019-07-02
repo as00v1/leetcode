@@ -13,11 +13,11 @@ public class Code004 {
     
     public static void main(String[] args) {
         int[] nums1 = new int[]{1, 3, 4};
-        int[] nums2 = new int[]{2};
+        int[] nums2 = new int[]{2, 5, 6};
 
         long startTime = System.currentTimeMillis();
 
-        double res =  findMedianSortedArrays(nums1, nums2);
+        double res =  findMedianSortedArrays2(nums1, nums2);
 
         long endTime = System.currentTimeMillis();
         System.out.println("耗时：" + (endTime - startTime) + "ms");
@@ -59,5 +59,34 @@ public class Code004 {
             result = sum[index];
         }
         return result;
+    }
+
+    /**
+     * 优化后
+     * @param nums1
+     * @param nums2
+     * @return
+     */
+    private static double findMedianSortedArrays2(int[] nums1, int[] nums2) {
+        double result;
+        int length1 = nums1 == null ? 0 : nums1.length;
+        int length2 = nums2 == null ? 0 : nums2.length;
+        int length = length1 + length2;// 合并长度
+        int[] num = new int[length];// 总数组
+        int i = 0, j = 0, k = 0;// 两个游标
+        while (k < length){
+            if (i < length1 && j < length2){
+                // 游标都不超长
+                num[k++] = nums1[i] <= nums2[j] ? nums1[i++] : nums2[j++];
+            }else if (i>=length1){
+                // i游标超长
+                // 将j全挪走
+                num[k++] = nums2[j++];;
+            }else {// j>=length2
+                num[k++] = nums1[i++];;
+            }
+        }
+        result = length%2==0 ? (num[length/2] + num[length/2-1])/2d : num[length/2];
+        return  result;
     }
 }
