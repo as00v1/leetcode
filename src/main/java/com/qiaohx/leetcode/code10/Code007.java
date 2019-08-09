@@ -1,9 +1,5 @@
 package com.qiaohx.leetcode.code10;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-
 /**
  * 给出一个 32 位的有符号整数，你需要将这个整数中每位上的数字进行反转。
  * 示例 1:
@@ -29,59 +25,36 @@ import java.util.List;
 public class Code007 {
 
     public static void main(String[] args) {
-        int res = reverse2(-123);
+        int res = reverse(-120);
         System.out.println(res);
     }
 
     private static int reverse(int x) {
-        int number = x >= 0 ? x : x*-1;// 取正数
-        List<Integer> list = new LinkedList<>();
-        if (number == 0){
-            list.add(0);
-        }else {
-            while (number != 0){
-                int yu = number % 10;
-                number = number/10;
-                list.add(yu);
-            }
+        // 正负数标识
+        boolean flag = false;
+        if (x < 0) {
+            // 如果是负数，先转化为正数
+            x = -1*x;
+            flag = true;
         }
-        int res = 0;
-        int length = list.size();
-        for (Integer i : list) {
-            res = res + i * power(10, --length, 1);
+        // 用long型防止溢出
+        Long sum = 0l;
+        while (x > 0) {
+            // 每次对x取最后一位
+            int temp = x % 10;
+            x = x / 10;
+            // 计算总数，需要把和X10再加上个位数
+            sum = sum*10 + temp;
+           
         }
-        res = x >= 0 ? res : res * -1;
-        return res;
-    }
-
-    private static int power(int i, int power, int res) {
-        if(power == 0){
-            return res;
+        if (flag) {
+            // 负数转换
+            sum = -1*sum;
         }
-        return power(i, --power, res*i);
-    }
-
-
-    private static int reverse2(int x) {
-//        int number = x >= 0 ? x : x * -1;// 取正数
-
-        String numStr = String.valueOf(x);
-        boolean flag = numStr.startsWith("-");
-        if (flag){
-            numStr = numStr.substring(1);
+        // 判断是否溢出
+        if (sum<Integer.MIN_VALUE || sum>Integer.MAX_VALUE) {
+            return 0;
         }
-        char[] chars = numStr.toCharArray();
-        StringBuilder sb = new StringBuilder();
-        for (int i = chars.length - 1; i >= 0; i--) {
-            sb.append(chars[i]);
-        }
-        System.out.println(sb.toString());
-        int res = 0;
-        try {
-            res = Integer.parseInt(flag ? "-" + sb.toString() : sb.toString());
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-        return res;
+        return sum.intValue();
     }
 }
