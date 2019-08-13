@@ -1,5 +1,9 @@
 package com.qiaohx.leetcode.code20;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.IntStream;
+
 /**
  * 罗马数字转整数
  * 罗马数字包含以下七种字符: I， V， X， L，C，D 和 M。
@@ -50,8 +54,78 @@ C 可以放在 D (500) 和 M (1000) 的左边，来表示 400 和 900。
  */
 public class Code013 {
 
+    public static void main(String[] args) {
+        int sum = romanToInt("MCMXCIV");
+        System.out.println(sum);
+    }
+
     private static int romanToInt(String s) {
-        
-        return 0;
+        Map<String, Integer> map = new HashMap<>();
+        map.put("I", 1);
+        map.put("V", 5);
+        map.put("X", 10);
+        map.put("L", 50);
+        map.put("C", 100);
+        map.put("D", 500);
+        map.put("M", 1000);
+
+        char[] chars = s.toCharArray();
+        int i = 0;
+        int sum = 0;
+        while (i < chars.length) {
+            char c = chars[i];
+            if (i == chars.length-1) {
+                sum += map.get(String.valueOf(c));
+                i++;
+                break;
+            }
+            if ('I' == c) {
+                // 碰见I得检查下右边有没有V
+                // I 可以放在 V (5) 和 X (10) 的左边，来表示 4 和 9。
+                if (chars[i+1] == 'V') {
+                    sum += 4;
+                    i+=2;
+                }else if (chars[i+1] == 'X') {
+                    sum += 9;
+                    i+=2;
+                }else {
+                    sum += map.get(String.valueOf(c));
+                    i++;
+                }
+            }else if ('X'==c) {
+                // 碰见X得检查下右边有没有L
+                // X 可以放在 L (50) 和 C (100) 的左边，来表示 40 和 90。 
+                if (chars[i+1] == 'L') {
+                    sum += 40;
+                    i+=2;
+                }else if (chars[i+1] == 'C') {
+                    sum += 90;
+                    i+=2;
+                }else {
+                    sum += map.get(String.valueOf(c));
+                    i++;
+                }
+            }else if ('C' == c) {
+                // 碰见C得检查下右边有没有D
+                // C 可以放在 D (500) 和 M (1000) 的左边，来表示 400 和 900。
+                if (chars[i+1] == 'D') {
+                    sum += 400;
+                    i+=2;
+                }else if (chars[i+1] == 'M') {
+                    sum += 900;
+                    i+=2;
+                }else {
+                    sum += map.get(String.valueOf(c));
+                    i++;
+                }
+            }else{
+                // 都没有正常加
+                sum += map.get(String.valueOf(c));
+                i++;
+            }
+            
+        }
+
+        return sum;
     }
 }
