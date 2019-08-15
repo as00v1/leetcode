@@ -54,11 +54,9 @@ public class Code021 {
                     p2 = p2.next;
                 }
             }else if (p1 != null) {
-                System.out.println(p1.val);
                 node.next = new ListNode(p1.val);
                 p1 = p1.next;
             }else if (p2 != null) {
-                System.out.println(p2.val);
                 node.next = new ListNode(p2.val);
                 p2 = p2.next;
             }
