@@ -38,9 +38,12 @@ public class Code001 {
     public static int[] sum(int nums[], int target){
         int i, j;
         for (i = 0; i < nums.length - 1; i++) {
-            int num1 = nums[i];// 每次取数组中一个数
-            for (j = i + 1; j < nums.length; j++) {// 遍历i之后的数组
-                int num2 = nums[j];// 依次取出i之后数组的数字
+            // 每次取数组中一个数
+            int num1 = nums[i];
+            // 遍历i之后的数组
+            for (j = i + 1; j < nums.length; j++) {
+                // 依次取出i之后数组的数字
+                int num2 = nums[j];
                 if ((num1 + num2) == target) {
                     return new int[]{i ,j};
                 }
@@ -79,10 +82,14 @@ public class Code001 {
         Map<Integer,Integer> map = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
             // 构建的时候就可以检查了
-            int num = target - nums[i];// 计算出要找到的数字
-            if (map.containsKey(num) && map.get(num) != i)// 看下在不在map里面
+            // 计算出要找到的数字
+            int num = target - nums[i];
+            // 看下在不在map里面
+            if (map.get(num) != null) {
                 return new int[]{map.get(num), i};
-            map.put(nums[i], i);// 将数组构建哈希表
+            }
+            // 将数组构建哈希表
+            map.put(nums[i], i);
         }
         return null;
     }
