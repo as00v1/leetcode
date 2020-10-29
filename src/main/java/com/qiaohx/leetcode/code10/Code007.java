@@ -38,7 +38,7 @@ public class Code007 {
             flag = true;
         }
         // 用long型防止溢出
-        Long sum = 0l;
+        Long sum = 0L;
         while (x > 0) {
             // 每次对x取最后一位
             int temp = x % 10;

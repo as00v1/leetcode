@@ -26,7 +26,7 @@ import java.util.*;
 public class Code009 {
 
     public static void main(String[] args) {
-        boolean flag = isPalindrome(12321);
+        boolean flag = isPalindrome2(12321);
         System.out.println(flag);
     }
 
@@ -55,5 +55,27 @@ public class Code009 {
         }
 
         return x == resver.intValue();
+    }
+
+    public static boolean isPalindrome2(int x) {
+        if(x < 0){
+            return false;
+        }else if(x < 10){
+            return true;
+        }
+        String s = String.valueOf(x);
+        char[] chars = s.toCharArray();
+        int len = chars.length / 2;
+
+        char[] left = Arrays.copyOfRange(chars, 0, len);
+        char[] right = Arrays.copyOfRange(chars, chars.length % 2 == 0 ? (len):(len+1), chars.length);
+        int i = 0,j = right.length-1;
+        while (i<left.length){
+            if (left[i++] != right[j--]){
+                return false;
+            }
+        }
+
+        return true;
     }
 }

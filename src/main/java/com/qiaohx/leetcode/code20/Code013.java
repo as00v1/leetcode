@@ -54,7 +54,7 @@ C 可以放在 D (500) 和 M (1000) 的左边，来表示 400 和 900。
 public class Code013 {
 
     public static void main(String[] args) {
-        int sum = romanToInt("MCMXCIV");
+        int sum = romanToInt2("MCMXCIV");
         System.out.println(sum);
     }
 
@@ -125,6 +125,36 @@ public class Code013 {
             
         }
 
+        return sum;
+    }
+
+
+    private static int romanToInt2(String s) {
+        Map<Character, Integer> map = new HashMap<>();
+        map.put('I', 1);
+        map.put('V', 5);
+        map.put('X', 10);
+        map.put('L', 50);
+        map.put('C', 100);
+        map.put('D', 500);
+        map.put('M', 1000);
+
+        char[] chars = s.toCharArray();
+        int i = 0;
+        int sum = 0;
+        while (i < chars.length-1) {
+            char c = chars[i];
+            int num1 = map.get(c);
+            int num2 = map.get(chars[i+1]);
+
+            if (num1 < num2) {
+                sum += -num1;
+            }else{
+                sum += num1;
+            }
+            i++;
+        }
+        sum += map.get(chars[i]);
         return sum;
     }
 }
